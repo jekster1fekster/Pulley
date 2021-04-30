@@ -679,18 +679,15 @@ open class PulleyViewController: UIViewController, PulleyDrawerViewControllerDel
     /// The currently rendered display mode for Pulley. This will match displayMode unless you have it set to 'automatic'. This will provide the 'actual' display mode (never automatic).
     public fileprivate(set) var currentDisplayMode: PulleyDisplayMode = .automatic {
         didSet {
-            
             if oldValue != currentDisplayMode
             {
-                if self.isViewLoaded
-                {
-                    self.view.setNeedsLayout()
-                    self.setNeedsSupportedDrawerPositionsUpdate()
-                }
-                
                 delegate?.drawerDisplayModeDidChange?(drawer: self)
                 (drawerContentViewController as? PulleyDrawerViewControllerDelegate)?.drawerDisplayModeDidChange?(drawer: self)
                 (primaryContentContainer as? PulleyPrimaryContentControllerDelegate)?.drawerDisplayModeDidChange?(drawer: self)
+                if self.isViewLoaded
+                {
+                    self.view.setNeedsLayout()
+                }
             }
         }
     }
